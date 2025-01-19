@@ -143,15 +143,21 @@
             // Adjust based on preferred age
             if (preferredAge < 25) {
                 chance += 10;
-            } else if (preferredAge > 35) {
-                chance -= 10;
+            } else if (preferredAge >= 25 && preferredAge <= 35) {
+                chance += 5;
+            } else if (preferredAge > 35 && preferredAge <= 50) {
+                chance -= 5;
+            } else if (preferredAge > 50) {
+                chance -= 20;
             }
 
             // Adjust based on preferred height
-            if (preferredHeight > 180) {
+            if (preferredHeight >= 170 && preferredHeight <= 180) {
+                chance += 10;
+            } else if (preferredHeight > 180) {
                 chance += 5;
             } else if (preferredHeight < 160) {
-                chance -= 5;
+                chance -= 10;
             }
 
             // Adjust based on preferred degree
@@ -164,6 +170,8 @@
             // Adjust based on behavior
             if (behavior === 'friendly' || behavior === 'funny') {
                 chance += 15;
+            } else if (behavior === 'serious') {
+                chance += 5;
             } else if (behavior === 'shy') {
                 chance -= 10;
             }
