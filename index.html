@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predict Your Chance</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e8f0fe;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            background-color: #6200ea;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+        }
+        .container {
+            margin: 20px;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            max-width: 600px;
+            width: 90%;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        select, input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #6200ea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #3700b3;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Predict Your Chance</h1>
+        <p>Find out your chance of getting a boyfriend or girlfriend based on fun choices!</p>
+    </header>
+    <div class="container">
+        <form id="genderForm">
+            <div class="form-group">
+                <label for="gender">Your Gender:</label>
+                <select id="gender" name="gender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+            <button type="button" onclick="showPreferences()">Next</button>
+        </form>
+
+        <form id="preferencesForm" style="display:none;">
+            <div class="form-group">
+                <label for="favoriteColor">Favorite Color:</label>
+                <select id="favoriteColor" name="favoriteColor">
+                    <option value="red">Red</option>
+                    <option value="blue">Blue</option>
+                    <option value="green">Green</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="pink">Pink</option>
+                    <option value="black">Black</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="preferredHeight">Preferred Height (cm):</label>
+                <input type="number" id="preferredHeight" name="preferredHeight" min="100" max="250">
+            </div>
+            <div class="form-group">
+                <label for="degree">Preferred Degree:</label>
+                <select id="degree" name="degree">
+                    <option value="highschool">High School</option>
+                    <option value="bachelor">Bachelor's</option>
+                    <option value="master">Master's</option>
+                    <option value="phd">PhD</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="preferredAge">Preferred Age:</label>
+                <input type="number" id="preferredAge" name="preferredAge" min="18" max="99">
+            </div>
+            <div class="form-group">
+                <label for="behavior">Preferred Behavior:</label>
+                <select id="behavior" name="behavior">
+                    <option value="friendly">Friendly</option>
+                    <option value="shy">Shy</option>
+                    <option value="funny">Funny</option>
+                    <option value="serious">Serious</option>
+                    <option value="adventurous">Adventurous</option>
+                </select>
+            </div>
+            <button type="button" onclick="predictChance()">Predict</button>
+        </form>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function showPreferences() {
+            document.getElementById('genderForm').style.display = 'none';
+            document.getElementById('preferencesForm').style.display = 'block';
+        }
+
+        function predictChance() {
+            const gender = document.getElementById('gender').value;
+            const color = document.getElementById('favoriteColor').value;
+            const preferredHeight = parseInt(document.getElementById('preferredHeight').value);
+            const degree = document.getElementById('degree').value;
+            const preferredAge = parseInt(document.getElementById('preferredAge').value);
+            const behavior = document.getElementById('behavior').value;
+
+            // Predict based on preferences
+            let chance = 50; // Start with a base chance
+
+            // Adjust based on preferred age
+            if (preferredAge < 25) {
+                chance += 10;
+            } else if (preferredAge > 35) {
+                chance -= 10;
+            }
+
+            // Adjust based on preferred height
+            if (preferredHeight > 180) {
+                chance += 5;
+            } else if (preferredHeight < 160) {
+                chance -= 5;
+            }
+
+            // Adjust based on preferred degree
+            if (degree === 'phd') {
+                chance += 10;
+            } else if (degree === 'highschool') {
+                chance -= 5;
+            }
+
+            // Adjust based on behavior
+            if (behavior === 'friendly' || behavior === 'funny') {
+                chance += 15;
+            } else if (behavior === 'shy') {
+                chance -= 10;
+            }
+
+            // Adjust based on color
+            if (color === 'red' || color === 'pink') {
+                chance += 5;
+            } else if (color === 'black') {
+                chance -= 5;
+            }
+
+            // Clamp chance between 0 and 100
+            chance = Math.max(0, Math.min(100, chance));
+
+            let target = gender === 'male' ? 'girlfriend' : 'boyfriend';
+            const message = `Based on your preferences, your chance of getting a ${target} is: ${chance.toFixed(1)}%`;
+
+            document.getElementById('result').textContent = message;
+        }
+    </script>
+</body>
+</html>
+
