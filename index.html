@@ -149,15 +149,19 @@
                 chance -= 5;
             } else if (preferredAge > 50) {
                 chance -= 20;
+            } else if (preferredAge > 90) {
+                chance -= 90;
             }
 
             // Adjust based on preferred height
-            if (preferredHeight >= 170 && preferredHeight <= 180) {
+            if (preferredHeight >= 4 && preferredHeight <= 5) {
                 chance += 10;
-            } else if (preferredHeight > 180) {
+            } else if (preferredHeight >5) {
                 chance += 5;
-            } else if (preferredHeight < 160) {
+            } else if (preferredHeight < 7) {
                 chance -= 10;
+            } else if (preferredHeight >7 ) {
+                chance -= 90;
             }
 
             // Adjust based on preferred degree
